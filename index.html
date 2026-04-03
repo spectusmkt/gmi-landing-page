@@ -185,16 +185,14 @@
     }
     .video-block {
       position: relative;
-      background: var(--gray-100);
+      background: transparent;
       border-radius: 18px;
       width: 100%; max-width: 600px;
-      aspect-ratio: 16/9;
       margin: 0 auto 40px;
-      display: flex; align-items: center; justify-content: center;
-      flex-direction: column; gap: 10px;
-      color: var(--gray-500); font-size: .85rem;
       overflow: hidden;
-      border: 2px dashed var(--gray-300);
+    }
+    @media (max-width: 480px) {
+      .video-block { max-width: 100%; border-radius: 12px; }
     }
     .video-block .play-icon {
       width: 64px; height: 64px;
