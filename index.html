@@ -333,7 +333,9 @@
       font-size: .92rem; font-weight: 500; color: var(--navy);
       box-shadow: 0 2px 10px rgba(5,36,68,.05);
       transition: transform .2s;
+      text-align: left;
     }
+    @media (max-width:480px) { .pill { font-size: .78rem; padding: 10px 16px; } }
     .pill:hover { transform: translateX(6px); }
     .pill .dot { width:8px; height:8px; border-radius:50%; background:var(--blue); flex-shrink:0; }
 
@@ -596,7 +598,7 @@
     }
     .total-box .lbl { font-size:.9rem; color:rgba(255,255,255,.65); }
     .total-box .val { font-size:1.15rem; font-weight:800; color:rgba(255,255,255,.4); text-decoration:line-through; }
-    .pivot { font-size:1.3rem; font-weight:800; color:var(--navy); margin-top:16px; }
+    .pivot { font-size:1.3rem; font-weight:800; color:var(--navy); margin-top:16px; margin-bottom: 0; padding-bottom: 40px; }
 
     /* ─── OFERTA ─── */
     .offer-section {
@@ -801,7 +803,7 @@
 <body>
 
 <!-- STICKY NAV -->
-<nav id="nav">
+<nav id="nav" style="display:none;">
   <div class="nav-brand">GMI <span>·</span> Gestão por Metas e Indicadores</div>
   <a href="#oferta" class="nav-btn">Quero Acesso</a>
 </nav>
@@ -1307,7 +1309,7 @@
         </div>
         <p class="offer-av">ou R$ 297,00 à vista</p>
         <a href="https://payfast.greenn.com.br/dvxt3mv" target="_blank" class="offer-btn">
-          QUERO ORGANIZAR MINHA EMPRESA AGORA
+          ADQUIRIR AGORA MESMO
         </a>
         <p class="offer-footnote">Condição especial por tempo limitado.</p>
       </div>
@@ -1386,7 +1388,7 @@
         </div>
         <p class="offer-av">ou R$ 297,00 à vista</p>
         <a href="https://payfast.greenn.com.br/dvxt3mv" target="_blank" class="offer-btn">
-          QUERO ORGANIZAR MINHA EMPRESA AGORA
+          ADQUIRIR AGORA MESMO
         </a>
         <p class="offer-footnote">Condição especial por tempo limitado.</p>
       </div>
@@ -1493,8 +1495,7 @@
 
   document.querySelectorAll('.counter').forEach(el => counterObserver.observe(el));
 
-  // ── Desbloqueio da página após 7 min de vídeo
-  // ── Desbloqueio da página após 7 min do carregamento
+  // ── Desbloqueio da página e nav após 7 min do carregamento
   setTimeout(function() {
     var locked = document.getElementById('page-locked');
     if (locked) {
@@ -1505,6 +1506,13 @@
       locked.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(function(el) {
         observer.observe(el);
       });
+    }
+    var navBar = document.getElementById('nav');
+    if (navBar) {
+      navBar.style.display = 'flex';
+      navBar.style.opacity = '0';
+      navBar.style.transition = 'opacity .5s ease';
+      setTimeout(function() { navBar.style.opacity = '1'; }, 50);
     }
   }, 5000); // 420000ms = 7 minutos
 
