@@ -1487,8 +1487,6 @@
   (function() {
     var unlocked = false;
     var UNLOCK_TIME = 420; // 7 minutos em segundos
-    var startTime = null;
-    var videoPlaying = false;
 
     function unlockPage() {
       if (unlocked) return;
@@ -1499,50 +1497,43 @@
         locked.style.opacity = '0';
         locked.style.transition = 'opacity .8s ease';
         setTimeout(function() { locked.style.opacity = '1'; }, 50);
-        // Re-observe reveal elements
         locked.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(function(el) {
           observer.observe(el);
         });
       }
     }
 
-    // Listen for smartplayer events via postMessage
+    // Detecta primeiro clique/tap na área do vídeo e agenda desbloqueio
+    var videoArea = document.querySelector('.video-block');
+    var started = false;
+    if (videoArea) {
+      videoArea.addEventListener('click', function() {
+        if (!started) {
+          started = true;
+          setTimeout(unlockPage, UNLOCK_TIME * 1000);
+        }
+      }, { once: false });
+    }
+
+    // Fallback: escuta qualquer postMessage do Vturb
     window.addEventListener('message', function(e) {
-      if (e.data && typeof e.data === 'string') {
-        try {
-          var data = JSON.parse(e.data);
-          if (data.event === 'smartplayer_playing' || data.event === 'play') {
-            if (!startTime) startTime = Date.now();
-            videoPlaying = true;
-          }
-          if (data.event === 'smartplayer_paused' || data.event === 'pause') {
-            videoPlaying = false;
-          }
-          if (data.currentTime && data.currentTime >= UNLOCK_TIME) {
-            unlockPage();
-          }
-        } catch(ex) {}
+      var d = e.data;
+      // tenta parsear se vier como string
+      if (typeof d === 'string') { try { d = JSON.parse(d); } catch(x) { return; } }
+      if (!d || typeof d !== 'object') return;
+
+      // Se o Vturb enviar evento de play, inicia contagem
+      var evt = d.event || d.type || '';
+      if (!started && (evt.indexOf('play') !== -1 || evt.indexOf('Playing') !== -1)) {
+        started = true;
+        setTimeout(unlockPage, UNLOCK_TIME * 1000);
       }
-      if (e.data && typeof e.data === 'object') {
-        if (e.data.currentTime >= UNLOCK_TIME) {
-          unlockPage();
-        }
-        if (e.data.event === 'smartplayer_playing' || e.data.type === 'play') {
-          if (!startTime) startTime = Date.now();
-          videoPlaying = true;
-        }
+
+      // Se o Vturb enviar currentTime >= 420, desbloqueia direto
+      if (d.currentTime && d.currentTime >= UNLOCK_TIME) {
+        unlockPage();
       }
     });
-
-    // Fallback: time-based unlock after 7 min from first play
-    setInterval(function() {
-      if (startTime && !unlocked) {
-        var elapsed = (Date.now() - startTime) / 1000;
-        if (elapsed >= UNLOCK_TIME) {
-          unlockPage();
-        }
-      }
-    }, 2000);
   })();
 
   // ── Módulos accordion
