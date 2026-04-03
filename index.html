@@ -670,7 +670,7 @@
     .autor-layout {
       display:grid; grid-template-columns:auto 1fr; gap:36px; align-items:start;
     }
-    @media (max-width:560px) { .autor-layout { grid-template-columns:1fr; text-align:center; } }
+    @media (max-width:560px) { .autor-layout { grid-template-columns:1fr; text-align:center; } .autor-photo-real { margin: 0 auto 16px; } }
     .autor-photo {
       width:160px; height:160px; border-radius:50%;
       background:var(--gray-100);
@@ -777,8 +777,16 @@
     /* ─── RESPONSIVE MISC ─── */
     @media (max-width:480px) {
       section { padding: 64px 0; }
-      #hero    { padding: 100px 0 64px; }
+      #hero    { padding: 72px 0 40px; }
+      #hero h1 { font-size: 1.3rem; margin-bottom: 12px; }
+      #hero .sub { font-size: .88rem; margin-bottom: 16px; }
+      .hero-logo { max-width: 160px; margin-bottom: 12px; }
       .btn-primary { font-size:.87rem; padding:16px 24px; }
+      .autor-photo-real { margin: 0 auto 16px; }
+      .offer-section .container { padding: 0 20px; }
+      .offer-product-img { width: 100%; margin: 0 auto 24px; display: block; }
+      .offer-btn { font-size: .82rem; padding: 16px 24px; white-space: normal; }
+      .offer-tag, .offer-sub, .offer-price-big, .offer-av, .offer-footnote { text-align: center; }
     }
 
     /* ─── NEW IMAGE CLASSES ─── */
@@ -1426,7 +1434,7 @@
 </div><!-- /page-locked -->
 
 <!-- WHATSAPP -->
-<a href="https://wa.me/55SEUNUMERO" class="wa-btn" target="_blank" rel="noopener" title="Fale pelo WhatsApp">
+<a href="https://wa.me/5545991510585" class="wa-btn" target="_blank" rel="noopener" title="Fale pelo WhatsApp">
   <svg viewBox="0 0 32 32" fill="white"><path d="M16 3C9.373 3 4 8.373 4 15c0 2.385.832 4.584 2.217 6.332L4.5 28l6.84-1.695A12.93 12.93 0 0016 27c6.627 0 12-5.373 12-12S22.627 3 16 3zm0 22a10.93 10.93 0 01-5.574-1.527l-.4-.237-4.06 1.006 1.03-3.95-.26-.408A10.933 10.933 0 015 15c0-6.065 4.935-11 11-11s11 4.935 11 11-4.935 11-11 11zm6.078-8.223c-.332-.166-1.965-.97-2.27-1.08-.305-.11-.527-.166-.748.166-.221.332-.857 1.08-1.05 1.3-.193.22-.387.248-.719.083-.332-.166-1.401-.516-2.669-1.648-.986-.88-1.652-1.966-1.845-2.298-.194-.332-.021-.511.146-.676.15-.149.332-.388.498-.582.166-.194.221-.332.332-.554.11-.221.055-.415-.028-.581-.083-.166-.748-1.804-1.025-2.47-.27-.648-.544-.56-.748-.57l-.637-.01c-.221 0-.581.082-.885.415-.305.332-1.162 1.135-1.162 2.768 0 1.634 1.19 3.213 1.356 3.437.166.22 2.346 3.58 5.686 5.023.794.343 1.414.548 1.896.7.797.254 1.523.218 2.097.132.64-.095 1.966-.804 2.243-1.581.277-.776.277-1.442.194-1.581-.082-.138-.304-.22-.637-.387z"/></svg>
 </a>
 
@@ -1496,7 +1504,7 @@
         observer.observe(el);
       });
     }
-  }, 5000); // 420000ms = 7 minutos
+  }, 420000); // 420000ms = 7 minutos
 
   // ── Módulos accordion
   document.querySelectorAll('.mod-acc-q').forEach(btn => {
